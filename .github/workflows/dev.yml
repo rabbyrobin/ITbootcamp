@@ -23,11 +23,11 @@ jobs:
     - name: Copy project files to server
       run: |
         rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
-          --delete ./ ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_SSH_HOST }}:/home/ubuntu/project/
+          --delete ./ ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_HOST }}:/home/ubuntu/project/
 
     - name: Install dependencies and restart app
       run: |
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_SSH_HOST }} << 'EOF'
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.DEV_SSH_USER }}@${{ secrets.DEV_HOST }} << 'EOF'
           cd /home/ubuntu/project
           npm install
           pm2 restart myapp || pm2 start server.js --name myapp
